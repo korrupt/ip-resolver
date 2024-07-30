@@ -26,4 +26,8 @@ export class PostgresConfigService {
   get DATABASE(): string {
     return this.conf.get('postgres.DB')!;
   }
+
+  get SYNC(): boolean {
+    return this.conf.get('postgres.SYNC')!;
+  }
 }

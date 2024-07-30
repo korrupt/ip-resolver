@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@ip-resolver/nest/postgres/feature": [
+        "libs/nest/postgres/feature/src/index.ts"
+      ],
       "@ip-resolver/nest/postgres/config": [
         "libs/nest/postgres/config/src/index.ts"
       ]

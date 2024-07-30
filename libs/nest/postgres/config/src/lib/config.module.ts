@@ -15,6 +15,7 @@ import * as Joi from 'joi';
         POSTGRES_USER: Joi.string().required(),
         POSTGRES_PASSWORD: Joi.string().required(),
         POSTGRES_DB: Joi.string().default('ip-resolver'),
+        POSTGRES_SYNC: Joi.bool().default(false),
       })
     })
   ],
@@ -27,4 +28,4 @@ import * as Joi from 'joi';
     PostgresConfigService,
   ],
 })
-export class NestPostgresConfigModule {}
+export class PostgresConfigModule {}
