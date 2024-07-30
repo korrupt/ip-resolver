@@ -1,0 +1,9 @@
+{
+  "name": "nest-postgres-config",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/nest/postgres/config/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project nest-postgres-config --web",
+  "targets": {}
+}
