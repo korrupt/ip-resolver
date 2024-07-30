@@ -5,6 +5,12 @@ dist
 tmp
 /out-tsc
 
+# config
+.env
+
+# persistence
+/postgres
+
 # dependencies
 node_modules
 
