@@ -9,4 +9,5 @@ export interface DeviceModel {
 }
 
 export type CreateDeviceModel = Pick<DeviceModel, 'id' | 'description'>;
-export type UpdateDeviceModel = Partial<DeviceModel>;
+export type UpdateDeviceModel = Partial<CreateDeviceModel>;
+export type PutDeviceIp = Pick<DeviceModel, 'last_ip'>;

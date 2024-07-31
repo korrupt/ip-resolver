@@ -1,13 +1,20 @@
-import { Controller, Delete, Get, Patch, Post, Put } from "@nestjs/common";
+import { Controller, Delete, Get, Param, Patch, Post, Put } from "@nestjs/common";
+import { NestDeviceService } from "../services";
 
 
 @Controller('device')
 export class NestDeviceController {
+  constructor(private device: NestDeviceService){}
+
   @Get()
-  public async getDevices() {}
+  public async getDevices() {
+    return this.device.find();
+  }
 
   @Get(':id')
-  public async getDeviceById() {}
+  public async getDeviceById(@Param('id') id: string) {
+    return this.device.findById(id);
+  }
 
   @Delete(':id')
   public async deleteDeviceById() {}
