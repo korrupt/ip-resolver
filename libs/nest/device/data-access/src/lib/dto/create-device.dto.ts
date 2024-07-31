@@ -4,7 +4,7 @@ import { CreateDeviceModel } from "@ip-resolver/shared/models";
 export class CreateDeviceDto implements CreateDeviceModel {
   @IsNotEmpty()
   @IsString()
-  slug!: string;
+  id!: string;
 
   @IsOptional()
   @IsString()

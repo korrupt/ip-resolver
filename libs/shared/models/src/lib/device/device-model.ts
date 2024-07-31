@@ -1,6 +1,6 @@
 
 export interface DeviceModel {
-  slug: string;
+  id: string;
   description?: string;
   created_at: Date;
   updated_at: Date;
@@ -8,5 +8,5 @@ export interface DeviceModel {
   last_ip_at?: Date;
 }
 
-export type CreateDeviceModel = Pick<DeviceModel, 'slug' | 'description'>;
+export type CreateDeviceModel = Pick<DeviceModel, 'id' | 'description'>;
 export type UpdateDeviceModel = Partial<DeviceModel>;

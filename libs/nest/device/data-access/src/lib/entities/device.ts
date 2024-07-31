@@ -3,9 +3,8 @@ import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } fro
 
 @Entity('device')
 export class DeviceEntity {
-
   @PrimaryColumn()
-  slug!: string;
+  id!: string;
 
   @Column()
   description?: string;
