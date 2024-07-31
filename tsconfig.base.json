@@ -26,7 +26,8 @@
       ],
       "@ip-resolver/nest/postgres/feature": [
         "libs/nest/postgres/feature/src/index.ts"
-      ]
+      ],
+      "@ip-resolver/shared/models": ["libs/shared/models/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
