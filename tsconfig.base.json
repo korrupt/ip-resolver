@@ -15,11 +15,17 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@ip-resolver/nest/postgres/feature": [
-        "libs/nest/postgres/feature/src/index.ts"
+      "@ip-resolver/nest/device/data-access": [
+        "libs/nest/device/data-access/src/index.ts"
+      ],
+      "@ip-resolver/nest/device/feature": [
+        "libs/nest/device/feature/src/index.ts"
       ],
       "@ip-resolver/nest/postgres/config": [
         "libs/nest/postgres/config/src/index.ts"
+      ],
+      "@ip-resolver/nest/postgres/feature": [
+        "libs/nest/postgres/feature/src/index.ts"
       ]
     }
   },

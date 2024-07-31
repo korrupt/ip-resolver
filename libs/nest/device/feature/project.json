@@ -1,0 +1,9 @@
+{
+  "name": "nest-device-feature",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/nest/device/feature/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project nest-device-feature --web",
+  "targets": {}
+}

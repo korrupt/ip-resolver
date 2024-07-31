@@ -1,0 +1,9 @@
+{
+  "name": "nest-device-data-access",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/nest/device/data-access/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project nest-device-data-access --web",
+  "targets": {}
+}
