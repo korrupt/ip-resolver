@@ -6,7 +6,7 @@ export class DeviceEntity {
   @PrimaryColumn()
   id!: string;
 
-  @Column()
+  @Column({ nullable: true })
   description?: string;
 
   @CreateDateColumn({ type: 'timestamp with time zone', name: 'created_at' })
@@ -15,9 +15,9 @@ export class DeviceEntity {
   @UpdateDateColumn({ type: 'timestamp with time zone', name: 'updated_at' })
   updated_at!: Date;
 
-  @Column({ nullable: true })
+  @Column({ name: 'last_ip', nullable: true, type: 'varchar' })
   last_ip?: string;
 
-  @Column({ type: 'timestamp with time zone', nullable: true })
+  @Column({ name: 'last_ip_at', type: 'timestamp with time zone', nullable: true })
   last_ip_at?: Date;
 }

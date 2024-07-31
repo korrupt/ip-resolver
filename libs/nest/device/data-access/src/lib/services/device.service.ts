@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeviceEntity } from "../entities";
 import { Repository } from "typeorm";
-import { UpdateDeviceDto } from "../dto";
+import { PutDeviceDto } from "../dto";
 
 
 @Injectable()
@@ -23,22 +23,21 @@ export class NestDeviceService {
     return device;
   }
 
-  public async updateDevice(id: string, dto: UpdateDeviceDto): Promise<DeviceEntity> {
-    const device = await this.findById(id);
-
-    return this.device.save({ ...device, ...dto });
+  public async putDevice(id: string, dto: PutDeviceDto) {
+    const found = await this.device.findOneBy({ id }) ?? {};
+    return this.device.save({ id, ...found, ...dto });
   }
 
-  public async save(device: DeviceEntity): Promise<DeviceEntity> {
-    return this.device.save(device);
-  }
 
   public async putDeviceIp(id: string, ip: string): Promise<void> {
     const device = await this.findById(id);
+    await this.device.save({ ...device, last_ip: ip, last_ip_at: new Date() });
+  }
 
-    device.last_ip = ip;
-    device.last_ip_at = new Date();
+  public async deleteDevice(id: string) {
+    const device = await this.findById(id);
+    await this.device.remove(device);
 
-    await this.device.save(device);
+    return { id };
   }
 }

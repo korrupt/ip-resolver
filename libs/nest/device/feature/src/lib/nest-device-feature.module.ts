@@ -1,4 +1,4 @@
-import { DeviceEntity, NestDeviceService } from '@ip-resolver/nest/device/data-access';
+import { DeviceEntity, NestDeviceController, NestDeviceService } from '@ip-resolver/nest/device/data-access';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     TypeOrmModule.forFeature([DeviceEntity])
   ],
   providers: [NestDeviceService],
-  exports: [NestDeviceService]
+  exports: [NestDeviceService],
+  controllers: [NestDeviceController]
 })
 export class NestDeviceFeatureModule {}

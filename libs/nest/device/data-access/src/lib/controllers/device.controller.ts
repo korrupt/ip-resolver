@@ -1,6 +1,7 @@
-import { Controller, Delete, Get, Param, Patch, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, InternalServerErrorException, Ip, Param, Patch, Post, Put, Req } from "@nestjs/common";
 import { NestDeviceService } from "../services";
-
+import { PutDeviceDto } from "../dto";
+import type { Request } from 'express';
 
 @Controller('device')
 export class NestDeviceController {
@@ -17,15 +18,24 @@ export class NestDeviceController {
   }
 
   @Delete(':id')
-  public async deleteDeviceById() {}
+  public async deleteDeviceById(@Param('id') id: string) {
+    return this.device.deleteDevice(id);
+  }
 
-  @Patch(':id')
-  public async updateDeviceById() {}
-
-  @Post()
-  public async createDevice() {}
+  @Put(':id')
+  public async putDevice(@Param('id') id: string, @Body() dto: PutDeviceDto) {
+    return this.device.putDevice(id, dto);
+  }
 
   @Put(':id/ip')
-  public async putDeviceIp() {}
+  public async putDeviceIp(@Param('id') id: string, @Req() req: Request) {
+    const ip = req.headers['x-forwarded-for']?.toString() || req.socket.remoteAddress;
+
+    if (!ip) {
+      throw new InternalServerErrorException(`Could not get remote IP`);
+    }
+
+    return this.device.putDeviceIp(id, ip);
+  }
 
 }
