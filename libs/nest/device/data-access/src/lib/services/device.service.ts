@@ -1,13 +1,16 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { DeviceEntity } from "../entities";
+import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
+import { DeviceEntity, DeviceHeartbeatEntity } from "../entities";
 import { Repository } from "typeorm";
 import { PutDeviceDto } from "../dto";
 
 
 @Injectable()
 export class NestDeviceService {
-  constructor(@InjectRepository(DeviceEntity) private device: Repository<DeviceEntity>){}
+  constructor(
+    @InjectRepository(DeviceEntity) private device: Repository<DeviceEntity>,
+    @InjectRepository(DeviceHeartbeatEntity) private device_heartbeat: Repository<DeviceHeartbeatEntity>
+  ){}
 
   public async find(): Promise<DeviceEntity[]> {
     return this.device.find();
@@ -29,9 +32,10 @@ export class NestDeviceService {
   }
 
 
-  public async putDeviceIp(id: string, ip: string): Promise<void> {
-    const device = await this.findById(id);
-    await this.device.save({ ...device, last_ip: ip, last_ip_at: new Date() });
+  public async putDeviceIp(id: string, ip: string): Promise<{ ip: string }> {
+    const { id: device_id } = await this.findById(id);
+    await this.device_heartbeat.save({ device_id, ip });
+    return { ip };
   }
 
   public async deleteDevice(id: string) {

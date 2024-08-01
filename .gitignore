@@ -9,7 +9,8 @@ tmp
 .env
 
 # persistence
-/postgres
+timescale/data
+timescale/backups/*
 
 # dependencies
 node_modules
