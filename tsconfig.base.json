@@ -15,6 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@ip-resolver/nest/auth/data-access": [
+        "libs/nest/auth/data-access/src/index.ts"
+      ],
+      "@ip-resolver/nest/auth/feature": ["libs/nest/auth/feature/src/index.ts"],
       "@ip-resolver/nest/device/data-access": [
         "libs/nest/device/data-access/src/index.ts"
       ],

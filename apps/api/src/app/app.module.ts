@@ -5,10 +5,15 @@ import { AppService } from './app.service';
 import { PostgresFeatureModule } from "@ip-resolver/nest/postgres/feature";
 import { NestDeviceFeatureModule } from '@ip-resolver/nest/device/feature';
 import { APP_PIPE } from '@nestjs/core';
+import { NestAuthFeatureModule } from '@ip-resolver/nest/auth/feature';
 
 
 @Module({
-  imports: [PostgresFeatureModule, NestDeviceFeatureModule],
+  imports: [
+    PostgresFeatureModule,
+    NestDeviceFeatureModule,
+    NestAuthFeatureModule,
+  ],
   controllers: [AppController],
   providers: [
     {
