@@ -12,6 +12,9 @@ export class AuthKeyEntity {
   @Column({ nullable: true })
   description!: string;
 
+  @Column({ type: 'timestamptz', name: 'expires_at', nullable: true })
+  expires_at?: Date;
+
   @CreateDateColumn({ type: 'timestamptz', name: 'created_at' })
   created_at!: Date;
 

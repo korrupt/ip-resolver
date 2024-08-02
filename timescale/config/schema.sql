@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS auth_key (
   id          TEXT PRIMARY KEY NOT NULL,
   permissions TEXT NOT NULL,
   description TEXT,
+  expires_at  TIMESTAMPTZ,
   created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at  TIMESTAMPTZ NOT NULL DEFAULT now()
 );
