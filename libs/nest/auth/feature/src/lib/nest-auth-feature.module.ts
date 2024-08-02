@@ -1,13 +1,33 @@
-import { AuthKeyAccessEntity, AuthKeyEntity } from '@ip-resolver/nest/auth/data-access';
+import { AuthKeyAccessEntity, AuthKeyEntity, JwtStrategy, NestAppGuard, NestAuthKeyGuard, NestAuthKeyService, NestAuthService, NestJwtGuard } from '@ip-resolver/nest/auth/data-access';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PassportModule } from "@nestjs/passport";
+import { JwtModule, JwtService } from '@nestjs/jwt';
+import { NestAuthConfigModule, NestAuthConfigService } from "@ip-resolver/nest/auth/config";
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([AuthKeyEntity, AuthKeyAccessEntity])
+    NestAuthConfigModule,
+    TypeOrmModule.forFeature([AuthKeyEntity, AuthKeyAccessEntity]),
+    PassportModule,
+    JwtModule.registerAsync({
+      imports: [NestAuthConfigModule],
+      inject: [NestAuthConfigService],
+      useFactory: (conf: NestAuthConfigService) => ({
+        secret: conf.JWT_SECRET,
+        signOptions: { expiresIn: conf.JWT_EXPIRES_IN }
+      })
+    })
   ],
-  // controllers: [],
-  // providers: [],
-  exports: [TypeOrmModule],
+  providers: [
+    JwtService,
+    JwtStrategy,
+    NestJwtGuard,
+    NestAuthKeyGuard,
+    NestAppGuard,
+    NestAuthService,
+    NestAuthKeyService,
+  ],
+  exports: [TypeOrmModule, JwtService],
 })
 export class NestAuthFeatureModule {}
