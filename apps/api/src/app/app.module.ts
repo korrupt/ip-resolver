@@ -6,6 +6,7 @@ import { PostgresFeatureModule } from "@ip-resolver/nest/postgres/feature";
 import { NestDeviceFeatureModule } from '@ip-resolver/nest/device/feature';
 import { APP_PIPE } from '@nestjs/core';
 import { NestAuthFeatureModule } from '@ip-resolver/nest/auth/feature';
+import { NestUserFeatureModule } from '@ip-resolver/nest/user/feature';
 
 
 @Module({
@@ -13,6 +14,7 @@ import { NestAuthFeatureModule } from '@ip-resolver/nest/auth/feature';
     PostgresFeatureModule,
     NestDeviceFeatureModule,
     NestAuthFeatureModule,
+    NestUserFeatureModule
   ],
   controllers: [AppController],
   providers: [
