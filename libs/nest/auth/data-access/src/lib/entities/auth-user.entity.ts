@@ -10,13 +10,10 @@ export class AuthUserEntity {
   @Column({})
   email!: string;
 
-  @Column({})
-  salt!: string;
-
-  @Column({})
+  @Column({ type: 'text' })
   hash!: string;
 
-  @Column({ type: 'boolean', default: '0' })
+  @Column({ type: 'boolean' })
   disabled!: boolean;
 
   @ManyToOne(() => UserEntity, { onDelete: 'CASCADE' })

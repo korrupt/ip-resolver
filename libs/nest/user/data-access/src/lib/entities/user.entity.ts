@@ -8,6 +8,9 @@ export class UserEntity {
   @Column({})
   name!: string;
 
+  @Column({})
+  disabled!: boolean;
+
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   created_at!: Date;
 
