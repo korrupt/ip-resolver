@@ -1,4 +1,4 @@
-import { AuthKeyAccessEntity, AuthKeyEntity, JwtStrategy, NestAppGuard, NestAuthKeyGuard, NestAuthKeyService, NestAuthService, NestJwtGuard } from '@ip-resolver/nest/auth/data-access';
+import { AuthKeyAccessEntity, AuthKeyEntity, AuthUserEntity, JwtStrategy, NestAppGuard, NestAuthKeyGuard, NestAuthKeyService, NestAuthService, NestJwtGuard } from '@ip-resolver/nest/auth/data-access';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from "@nestjs/passport";
@@ -8,7 +8,11 @@ import { NestAuthConfigModule, NestAuthConfigService } from "@ip-resolver/nest/a
 @Module({
   imports: [
     NestAuthConfigModule,
-    TypeOrmModule.forFeature([AuthKeyEntity, AuthKeyAccessEntity]),
+    TypeOrmModule.forFeature([
+      AuthKeyEntity,
+      AuthKeyAccessEntity,
+      AuthUserEntity
+    ]),
     PassportModule,
     JwtModule.registerAsync({
       imports: [NestAuthConfigModule],
