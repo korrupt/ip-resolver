@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 module.exports = async function () {
   // Configure axios for tests to use.

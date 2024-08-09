@@ -66,7 +66,6 @@ export class NestAuthService {
       throw new ForbiddenException(`User has been disabled.`);
     }
 
-    console.log(dto, found);
     // check password
     const matches = await bcrypt.compare(password, found.hash);
     if (!matches) {
