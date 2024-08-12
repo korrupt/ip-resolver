@@ -5,10 +5,12 @@ const _axios = axios.create();
 _axios.interceptors.response.use(
   response => response, // Pass through successful responses
   (error: AxiosError) => {
-    if (axios.isAxiosError(error)) {
-      console.error('Axios error:', error.toJSON());
-    } else {
-      console.error('Unexpected error:', error);
+    if (process.env.NODE_ENV === "e2e") {
+      if (axios.isAxiosError(error)) {
+        console.error('Axios error:', error.toJSON());
+      } else {
+        console.error('Unexpected error:', error);
+      }
     }
 
     // if (error.name == 'AggregateError') {

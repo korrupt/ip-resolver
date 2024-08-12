@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS auth_key (
 
 CREATE TABLE IF NOT EXISTS auth_key_access (
   time        TIMESTAMPTZ DEFAULT now() NOT NULL,
-  auth_key_id TEXT REFERENCES auth_key(id) NOT NULL,
+  auth_key_id TEXT REFERENCES auth_key(id) ON DELETE CASCADE NOT NULL,
   method      TEXT NOT NULL,
   path        TEXT NOT NULL,
   ip          TEXT NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS device (
 
 CREATE TABLE IF NOT EXISTS device_heartbeat (
   time      TIMESTAMPTZ DEFAULT now() NOT NULL,
-  device_id TEXT REFERENCES device(id) NOT NULL,
+  device_id TEXT REFERENCES device(id) ON DELETE CASCADE NOT NULL,
   ip        TEXT DEFAULT 'N/A' NOT NULL,
   PRIMARY KEY (time, device_id)
 );

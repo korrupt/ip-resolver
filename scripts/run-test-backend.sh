@@ -3,15 +3,16 @@ set -a
 . $(pwd)/.env.test
 set +a
 
-
 # Function to clean up processes on exit
-cleanup() {
-  echo "Terminating processes..."
-  kill $docker_pid $nx_pid
+cleanup_backend() {
+  echo "Terminating backend processes..."
+  kill $docker_pid  # Terminate the Docker process
   wait $docker_pid 2>/dev/null
-  wait $nx_pid 2>/dev/null
   echo "Processes terminated."
 }
+
+# Trap SIGINT and SIGTERM to trigger cleanup
+trap cleanup_backend SIGINT SIGTERM
 
 # Run docker compose and capture PID
 docker_compose_output=$(mktemp)
@@ -21,34 +22,14 @@ docker_pid=$!
 # During testing a cold start took ~ 17s
 sleep 17
 
-# Run nx command and capture PID
-nx_output=$(mktemp)
-nx run --skipNxCache api:serve > >(tee "$nx_output") 2>&1 &
-nx_pid=$!
+# Run nx command in the foreground (without &)
+nx run --skipNxCache api:serve
 
-# Wait for both processes to start
-sleep 4
+# The script will wait here for the nx process to finish
 
-# Output PIDs
-echo "Docker Compose PID: $docker_pid"
-echo "NX Serve PID: $nx_pid"
+# Clean up Docker after nx finishes or on Ctrl+C
+cleanup_backend
 
-# Trap EXIT signal to ensure cleanup
-trap cleanup EXIT
-
-# Wait for spacebar input
-echo "Press spacebar to shutdown"
-while true; do
-  IFS= read -r -n1 -s key
-  if [[ $key == ' ' ]]; then
-    break
-  fi
-done
-
-echo "Clearing timescale data"
-
-cleanup
-
-# Clean up after spacebar is pressed
+# Clean up after spacebar is pressed (optional, you might not need this anymore)
 docker compose -f docker-compose-test.yml down
 docker volume rm -f ip-resolver_timescale-test

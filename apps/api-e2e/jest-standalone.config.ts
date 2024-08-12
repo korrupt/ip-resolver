@@ -4,6 +4,7 @@ export default {
   preset: '../../jest.preset.js',
   setupFiles: ['<rootDir>/src/support/test-setup.ts'],
   testEnvironment: 'node',
+  testSequencer: '<rootDir>/src/support/sequencer.js',
   transform: {
     '^.+\\.[tj]s$': [
       'ts-jest',
