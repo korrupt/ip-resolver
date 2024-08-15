@@ -69,7 +69,7 @@ export class NestAuthService {
     // check password
     const matches = await bcrypt.compare(password, found.hash);
     if (!matches) {
-      throw new ForbiddenException(`Wrong password`);
+      throw new ForbiddenException(`Email/password doesnt match`);
     }
 
     const access_token = await this.jwt.signAsync(<JwtPayload>{ sub: user.id, email, roles: user.roles, name: user.name, });
