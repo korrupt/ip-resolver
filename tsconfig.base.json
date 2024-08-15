@@ -37,6 +37,7 @@
         "libs/nest/user/data-access/src/index.ts"
       ],
       "@ip-resolver/nest/user/feature": ["libs/nest/user/feature/src/index.ts"],
+      "@ip-resolver/shared/acl": ["libs/shared/acl/src/index.ts"],
       "@ip-resolver/shared/models": ["libs/shared/models/src/index.ts"]
     }
   },
