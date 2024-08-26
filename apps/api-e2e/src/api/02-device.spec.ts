@@ -1,11 +1,9 @@
 
 
-import { CreateDeviceModel } from "@ip-resolver/shared/models";
 import _axios from "../support/axios";
 import credentials from "./credentials";
-import { AxiosError, HttpStatusCode } from "axios";
+import { HttpStatusCode } from "axios";
 import { DeviceEntity } from "@ip-resolver/nest/device/data-access";
-import { NotFoundException } from "@nestjs/common";
 
 describe('device', () => {
 
