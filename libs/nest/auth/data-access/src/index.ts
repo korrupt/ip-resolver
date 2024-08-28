@@ -1,3 +1,4 @@
+export * from './lib/classes';
 export * from './lib/entities';
 export * from './lib/factory';
 export * from './lib/dto';

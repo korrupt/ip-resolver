@@ -22,4 +22,7 @@ export class AuthUserEntity {
 
   // @Column({})
   user_id!: string;
+
+  @Column({})
+  owner_id!: string;
 }

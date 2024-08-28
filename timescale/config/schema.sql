@@ -1,11 +1,29 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+CREATE TABLE IF NOT EXISTS device (
+  id          TEXT PRIMARY KEY,
+  description TEXT,
+  last_ip     TEXT,
+  created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+  owner_id    TEXT
+);
+
+CREATE TABLE IF NOT EXISTS device_heartbeat (
+  time      TIMESTAMPTZ DEFAULT now() NOT NULL,
+  device_id TEXT REFERENCES device(id) ON DELETE CASCADE NOT NULL,
+  ip        TEXT DEFAULT 'N/A' NOT NULL,
+  PRIMARY KEY (time, device_id)
+);
 CREATE TABLE IF NOT EXISTS auth_key (
   id          TEXT PRIMARY KEY NOT NULL,
   permissions TEXT NOT NULL,
   description TEXT,
   expires_at  TIMESTAMPTZ,
   created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
-  updated_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+  updated_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+  device_id   TEXT REFERENCES device(id) ON DELETE SET NULL,
+  owner_id    TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS auth_key_access (
@@ -15,21 +33,6 @@ CREATE TABLE IF NOT EXISTS auth_key_access (
   path        TEXT NOT NULL,
   ip          TEXT NOT NULL,
   PRIMARY KEY (time, auth_key_id)
-);
-
-CREATE TABLE IF NOT EXISTS device (
-  id          TEXT PRIMARY KEY,
-  description TEXT,
-  last_ip     TEXT,
-  created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
-  updated_at  TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-
-CREATE TABLE IF NOT EXISTS device_heartbeat (
-  time      TIMESTAMPTZ DEFAULT now() NOT NULL,
-  device_id TEXT REFERENCES device(id) ON DELETE CASCADE NOT NULL,
-  ip        TEXT DEFAULT 'N/A' NOT NULL,
-  PRIMARY KEY (time, device_id)
 );
 
 CREATE OR REPLACE FUNCTION update_device_last_ip()

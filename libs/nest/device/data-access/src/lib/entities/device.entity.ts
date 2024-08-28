@@ -17,4 +17,7 @@ export class DeviceEntity {
 
   @Column({ name: 'last_ip' })
   last_ip!: string;
+
+  @Column({ name: 'owner_id' })
+  owner_id!: string;
 }

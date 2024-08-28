@@ -4,6 +4,7 @@ export interface DeviceModel {
   description?: string;
   created_at: Date;
   updated_at: Date;
+  owner_id: string;
   last_ip?: string;
   last_ip_at?: Date;
 }

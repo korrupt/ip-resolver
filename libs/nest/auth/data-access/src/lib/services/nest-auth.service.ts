@@ -30,8 +30,10 @@ export class NestAuthService {
     const hash = await bcrypt.hash(password, 15);
 
     const { id: user_id, roles: user_roles } = await this.dataSource.transaction(async (em: EntityManager) => {
-      const user = await em.save(UserEntity, UserFactory.createUserObject({ name }), { reload: true });
-      const _ = await em.save(AuthUserEntity, AuthUserFactory.createAuthUserObject({ email, hash, user }));
+      const [{ id }] = await em.query('SELECT uuid_generate_v4() as id');
+
+      const user = await em.save(UserEntity, UserFactory.createUserObject({ id, name, owner_id: id }), { reload: true });
+      const _ = await em.save(AuthUserEntity, AuthUserFactory.createAuthUserObject({ email, hash, user, owner_id: id }));
 
       return user;
     });

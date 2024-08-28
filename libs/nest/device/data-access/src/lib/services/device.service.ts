@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
+import { InjectRepository } from "@nestjs/typeorm";
 import { DeviceEntity, DeviceHeartbeatEntity } from "../entities";
 import { Repository } from "typeorm";
 import { PutDeviceDto } from "../dto";
@@ -16,14 +16,17 @@ export class NestDeviceService {
     return this.device.find();
   }
 
-  public async findById(id: string): Promise<DeviceEntity> {
-    const device = await this.device.findOneBy({ id });
 
-    if (!device) {
+  public async findById(id: string, throws: false): Promise<DeviceEntity | null>;
+  public async findById(id: string, throws?: true): Promise<DeviceEntity>;
+  public async findById(id: string, throws = true): Promise<DeviceEntity | null> {
+    const found = await this.device.findOneBy({ id });
+
+    if (!found && throws) {
       throw new NotFoundException();
     }
 
-    return device;
+    return found;
   }
 
   public async putDevice(id: string, dto: PutDeviceDto) {

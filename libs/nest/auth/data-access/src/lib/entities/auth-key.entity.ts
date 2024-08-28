@@ -20,4 +20,7 @@ export class AuthKeyEntity {
 
   @UpdateDateColumn({ type: 'timestamptz', name: 'updated_at' })
   updated_at!: Date;
+
+  @Column({ name: 'owner_id' })
+  owner_id!: string;
 }

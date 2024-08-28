@@ -1,4 +1,4 @@
-import { AuthKeyAccessEntity, AuthKeyEntity, AuthUserEntity, JwtStrategy, NestAppGuard, NestAuthController, NestAuthKeyGuard, NestAuthKeyService, NestAuthService, NestJwtGuard } from '@ip-resolver/nest/auth/data-access';
+import { AclGuard, AuthKeyAccessEntity, AuthKeyEntity, AuthUserEntity, JwtStrategy, NestAppGuard, NestAuthController, NestAuthKeyGuard, NestAuthKeyService, NestAuthService, NestJwtGuard } from '@ip-resolver/nest/auth/data-access';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from "@nestjs/passport";
@@ -27,9 +27,11 @@ import { UserEntity } from '@ip-resolver/nest/user/data-access';
   ],
   providers: [
     JwtStrategy,
-    NestJwtGuard,
-    NestAuthKeyGuard,
-    NestAppGuard,
+    // NestJwtGuard,
+    // NestAuthKeyGuard,
+
+    // NestAppGuard,
+    AclGuard,
     NestAuthService,
     NestAuthKeyService,
   ],

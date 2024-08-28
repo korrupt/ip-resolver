@@ -19,4 +19,7 @@ export class UserEntity {
 
   @Column({ array: true, type: 'text' })
   roles!: string[];
+
+  @Column({ name: 'owner_id' })
+  owner_id!: string;
 }
