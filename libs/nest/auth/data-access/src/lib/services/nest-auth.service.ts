@@ -8,6 +8,7 @@ import { UserEntity, UserFactory } from "@ip-resolver/nest/user/data-access";
 import { AuthUserFactory } from "../factory";
 import { AccessToken, CreateAuthLocalResult, JwtPayload } from "@ip-resolver/shared/models";
 import { JwtService } from "@nestjs/jwt";
+import { AccessRole } from "@ip-resolver/shared/acl";
 
 @Injectable()
 export class NestAuthService {
@@ -18,6 +19,18 @@ export class NestAuthService {
     private jwt: JwtService,
   ){}
 
+  public async checkForSuperAdmin(): Promise<boolean> {
+    const [{ exists }] = await this.dataSource.query<[{ exists: boolean }]>(`
+        SELECT EXISTS (
+          SELECT 1
+          FROM "user" u
+          WHERE 'SUPER_ADMIN' = ANY(u.roles)
+        );
+      `);
+
+    return exists;
+  }
+
   async createAuthLocalUser(dto: CreateAuthLocalDto): Promise<CreateAuthLocalResult> {
     const { email, name, password } = dto;
 
@@ -27,12 +40,16 @@ export class NestAuthService {
       throw new ForbiddenException(`Email already in use`);
     }
 
+    const super_admin = await this.checkForSuperAdmin();
+
     const hash = await bcrypt.hash(password, 15);
 
     const { id: user_id, roles: user_roles } = await this.dataSource.transaction(async (em: EntityManager) => {
       const [{ id }] = await em.query('SELECT uuid_generate_v4() as id');
 
-      const user = await em.save(UserEntity, UserFactory.createUserObject({ id, name, owner_id: id }), { reload: true });
+      const roles = !super_admin ? [AccessRole.SUPER_ADMIN] : [];
+
+      const user = await em.save(UserEntity, UserFactory.createUserObject({ id, name, owner_id: id, roles }), { reload: true });
       const _ = await em.save(AuthUserEntity, AuthUserFactory.createAuthUserObject({ email, hash, user, owner_id: id }));
 
       return user;

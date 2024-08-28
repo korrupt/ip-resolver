@@ -11,9 +11,10 @@ export type CreateUserOptions = {
 export class UserFactory {
   static createUserObject(options: CreateUserOptions): Omit<UserEntity, 'id' | 'created_at' | 'updated_at'> {
     return {
-      roles: [AccessRole.USER],
+      name: options.name,
+      owner_id: options.owner_id,
+      roles: (options.roles || []).concat(AccessRole.USER),
       disabled: false,
-      ...options,
     }
   }
 }

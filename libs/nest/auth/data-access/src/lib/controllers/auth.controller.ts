@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post } from "@nestjs/common";
 import { NestAuthService } from "../services";
 import { CreateAuthLocalDto, LoginAuthLocalDto } from "../dto";
 import { AccessToken, CreateAuthLocalResult } from "@ip-resolver/shared/models";
@@ -9,6 +9,11 @@ export class NestAuthController {
   constructor(
     private auth: NestAuthService
   ){}
+
+  @Get('first')
+  public async checkFirstUser() {
+    return this.auth.checkForSuperAdmin();
+  }
 
   @Post('local/new')
   public async createLocalUser(@Body() dto: CreateAuthLocalDto): Promise<CreateAuthLocalResult> {

@@ -6,9 +6,6 @@ export class AuthKeyEntity {
   @PrimaryColumn()
   id!: string;
 
-  @Column({})
-  permissions!: string;
-
   @Column({ nullable: true })
   description!: string;
 
