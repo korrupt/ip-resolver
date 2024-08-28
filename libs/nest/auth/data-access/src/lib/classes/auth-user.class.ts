@@ -6,7 +6,7 @@ export class AuthUser {
   constructor(private payload?: JwtPayload | false) {}
 
   get id(): string | undefined {
-    return this.payload ? this.payload.id : undefined;
+    return this.payload ? this.payload.sub : undefined;
   }
 
   get roles(): AccessRole[] {

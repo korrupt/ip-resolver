@@ -41,14 +41,13 @@ export class NestDeviceController {
   public async deleteDeviceById(
     @GetAuth() auth: AuthUser,
     @Param('id') id: string
-  ) {
+  ): Promise<{ id: string }> {
     const found = await this.device.findById(id, false);
 
     const permission = auth.delete(found, AccessResource.DEVICE);
     if (!permission.granted) throw new ForbiddenException();
 
-
-    return permission.filter(found);
+    return this.device.deleteDevice(id);
   }
 
   @Put(':id')
@@ -64,16 +63,24 @@ export class NestDeviceController {
       const permission = auth.update(found, AccessResource.DEVICE);
       if (!permission.granted) throw new ForbiddenException();
 
-
       const filtered_permissions = permission.filter(dto);
       const result = await this.device.putDevice(id, filtered_permissions);
 
       const read_permissions = auth.read(result, AccessResource.DEVICE);
 
       return read_permissions.filter(result);
+    } else {
+      const owner_id = dto.owner_id ? dto.owner_id : auth.id as string; // guard assures this
+      const permission = auth.create({ owner_id }, AccessResource.DEVICE);
+
+      if (!permission.granted) throw new ForbiddenException();
+      const filtered_permissions = permission.filter({ ...dto, owner_id });
+
+      const result = await this.device.putDevice(id, filtered_permissions);
+
+      const read_permissions = auth.read(result, AccessResource.DEVICE);
+      return read_permissions.filter(result);
     }
-
-
   }
 
   @Put(':id/ip')

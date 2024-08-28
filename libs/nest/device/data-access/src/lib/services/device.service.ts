@@ -30,8 +30,8 @@ export class NestDeviceService {
   }
 
   public async putDevice(id: string, dto: PutDeviceDto) {
-    const found = await this.device.findOneBy({ id }) ?? {};
-    return this.device.save({ id, ...found, ...dto });
+    const found = await this.device.findOneBy({ id }) ?? { id };
+    return this.device.save({ ...found, ...dto });
   }
 
 
