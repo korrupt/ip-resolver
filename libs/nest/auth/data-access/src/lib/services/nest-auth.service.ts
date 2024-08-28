@@ -19,7 +19,7 @@ export class NestAuthService {
     private jwt: JwtService,
   ){}
 
-  public async checkForSuperAdmin(): Promise<boolean> {
+  public async checkForSuperAdmin(): Promise<{ exists: boolean }> {
     const [{ exists }] = await this.dataSource.query<[{ exists: boolean }]>(`
         SELECT EXISTS (
           SELECT 1
@@ -28,7 +28,7 @@ export class NestAuthService {
         );
       `);
 
-    return exists;
+    return { exists };
   }
 
   async createAuthLocalUser(dto: CreateAuthLocalDto): Promise<CreateAuthLocalResult> {
