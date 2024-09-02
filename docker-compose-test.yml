@@ -1,0 +1,33 @@
+
+networks:
+  testing-network:
+
+volumes:
+  timescale-test:
+
+services:
+  timescale:
+    image: timescale/timescaledb:latest-pg16
+    shm_size: 1gb
+    command: -p ${POSTGRES_PORT}
+    entrypoint: >
+      bash -c '
+        crond -f -L /dev/stdout &
+        /usr/local/bin/docker-entrypoint.sh postgres -p $POSTGRES_PORT
+      '
+    restart: unless-stopped
+    volumes:
+      # - ./timescale/data:/var/lib/postgresql/data
+      - timescale-test:/var/lib/postgresql/data
+      - ./timescale/backups:/usr/src/backups
+      - ./timescale/config/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - ./timescale/config/cron:/etc/periodic:z #z = runnable
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    # only for dev
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    networks:
+      - testing-network

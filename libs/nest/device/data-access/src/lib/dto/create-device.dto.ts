@@ -5,4 +5,8 @@ export class PutDeviceDto {
   @IsOptional()
   @IsString()
   description?: string;
+
+  @IsOptional()
+  @IsString()
+  owner_id?: string;
 }

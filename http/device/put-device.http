@@ -1,6 +1,7 @@
-PUT http://127.0.0.1:3000/api/device/test
+PUT http://127.0.0.1:3000/api/device/skjetlein-skjerm
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzZmFmN2RiNi1iMTQwLTRhN2MtYjRjMC1hNDA3YjI3ZWU0ZDEiLCJlbWFpbCI6InRlc3RAdGVzdGVzZW4ubm8iLCJyb2xlcyI6WyJTVVBFUl9BRE1JTiIsIlVTRVIiXSwibmFtZSI6IlRlc3QgVGVzdGVzZW4iLCJpYXQiOjE3MjQ4MzY4MTksImV4cCI6MTcyNDg0MDQxOX0.KPFKhpFte4lwkOa5jwPikv2soPNKKx3TMr5FfcJ1AYI
 
 {
-  "description": "test"
+  "description": "ayylmao"
 }

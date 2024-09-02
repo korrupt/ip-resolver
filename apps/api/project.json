@@ -5,6 +5,22 @@
   "projectType": "application",
   "tags": [],
   "targets": {
+    "webpack": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/api",
+        "tsConfig": "apps/api/tsconfig.app.json",
+        "webpackConfig": "apps/api/webpack-prod.config.js"
+      },
+      "configurations": {
+        "development": {
+          "webpackConfig": "apps/api/webpack.config.js"
+        },
+        "production": {}
+      }
+    },
     "serve": {
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
@@ -17,6 +33,14 @@
         },
         "production": {
           "buildTarget": "api:build:production"
+        }
+      }
+    },
+    "docker": {
+      "executor": "nx:run-commands",
+      "configurations": {
+        "build-test": {
+          "command": "docker build . -f apps/api/Dockerfile.test -t ip-resolver-api:test"
         }
       }
     }
