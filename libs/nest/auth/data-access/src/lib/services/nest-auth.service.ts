@@ -40,8 +40,8 @@ export class NestAuthService {
       throw new ForbiddenException(`Email already in use`);
     }
 
-    const super_admin = await this.checkForSuperAdmin();
 
+    const super_admin = await this.checkForSuperAdmin();
     const hash = await bcrypt.hash(password, 15);
 
     const { id: user_id, roles: user_roles } = await this.dataSource.transaction(async (em: EntityManager) => {

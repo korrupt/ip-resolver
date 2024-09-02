@@ -15,6 +15,7 @@ jest.mock('bcryptjs');
 
 class DatasourceMock {
   transaction = jest.fn();
+  query = jest.fn();
 }
 
 class RepositoryMock {
@@ -91,9 +92,12 @@ describe('NestAuthService', () => {
       jest.mocked(hash).mockImplementationOnce((e) => e);
 
       const mockEm = {
-        save: jest.fn((e) => ({ ...e, id: '123', roles: [] }))
+        save: jest.fn((e) => ({ ...e, id: '123', roles: [] })),
+        query: jest.fn(() => Promise.resolve([{ id: '123' }])),
       };
 
+
+      jest.spyOn(service, 'checkForSuperAdmin').mockResolvedValueOnce({ exists: false }); // fix
       // @ts-ignore
       mockedDatasource.transaction.mockImplementationOnce((cb: () => any) => cb.call(null, mockEm));
 
