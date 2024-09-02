@@ -27,10 +27,6 @@ import { UserEntity } from '@ip-resolver/nest/user/data-access';
   ],
   providers: [
     JwtStrategy,
-    // NestJwtGuard,
-    // NestAuthKeyGuard,
-
-    // NestAppGuard,
     AclGuard,
     NestAuthService,
     NestAuthKeyService,
