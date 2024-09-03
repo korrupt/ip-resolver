@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, ForbiddenException, Get, InternalServerErrorException, Ip, Param, Patch, Post, Put, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, ForbiddenException, Get, InternalServerErrorException, NotFoundException, Param, Put, Req, UseGuards } from "@nestjs/common";
 import { NestDeviceService } from "../services";
 import { PutDeviceDto } from "../dto";
 import type { Request } from 'express';
@@ -14,6 +14,7 @@ export class NestDeviceController {
   public async getDevices(
     @GetAuth() auth: AuthUser,
   ) {
+
     const permission = auth.read(null, AccessResource.DEVICE);
     if (!permission.granted) throw new ForbiddenException();
 
@@ -32,6 +33,10 @@ export class NestDeviceController {
     const permission = auth.read(found, AccessResource.DEVICE);
 
     if (!permission.granted) throw new ForbiddenException();
+
+    if (!found) {
+      throw new NotFoundException();
+    }
 
     return permission.filter(found);
   }

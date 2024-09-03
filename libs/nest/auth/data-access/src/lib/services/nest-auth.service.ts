@@ -47,7 +47,7 @@ export class NestAuthService {
     const { id: user_id, roles: user_roles } = await this.dataSource.transaction(async (em: EntityManager) => {
       const [{ id }] = await em.query('SELECT uuid_generate_v4() as id');
 
-      const roles = !super_admin ? [AccessRole.SUPER_ADMIN] : [];
+      const roles = !super_admin.exists ? [AccessRole.SUPER_ADMIN] : [];
 
       const user = await em.save(UserEntity, UserFactory.createUserObject({ id, name, owner_id: id, roles }), { reload: true });
       const _ = await em.save(AuthUserEntity, AuthUserFactory.createAuthUserObject({ email, hash, user, owner_id: id }));

@@ -1,19 +1,31 @@
-
-class CredentialManager {
-  credentials = {
-    email: 'test@testesen.no',
-    password: '123@@Abcd',
-  };
+class UserCredential {
+  constructor(
+    public credentials: { email: string; password: string },
+  ) {}
 
   access_token?: string;
 
-  get headers() {
+  get header() {
     return {
       headers: {
-        'Authorization': this.access_token
+        'Authorization': `Bearer ${this.access_token}`
       }
-    } as const;
+    }
   }
+
 }
 
-export default new CredentialManager();
+export class CredentialManager {
+
+  admin = new UserCredential({
+    'email': 'admin@testesen.no',
+    'password': '123abc@iiAAA'
+  });
+
+  user = new UserCredential({
+    'email': 'test@testesen.no',
+    'password': '123$TrongP@ssword'
+  });
+}
+
+

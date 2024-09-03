@@ -6,7 +6,7 @@ export default {
   globalTeardown: '<rootDir>/src/support/global-teardown.ts',
   setupFiles: ['<rootDir>/src/support/test-setup.ts'],
   testEnvironment: 'node',
-  testSequencer: '<rootDir>/src/support/sequencer.ts',
+  testSequencer: '<rootDir>/src/support/sequencer.js',
   transform: {
     '^.+\\.[tj]s$': [
       'ts-jest',

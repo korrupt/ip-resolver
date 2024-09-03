@@ -1,3 +1,2 @@
-DELETE http://127.0.0.1:3000/api/device/skjetlein-skjerm
+GET http://127.0.0.1:3000/api/device/skjetlein-skjerm
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmMWZhZDRkMi0zMjg0LTRmZTgtODVkMi03YzcyOTk5YmI2MDAiLCJlbWFpbCI6ImFkbWluQHRlc3Rlc2VuLm5vIiwicm9sZXMiOlsiU1VQRVJfQURNSU4iLCJVU0VSIl0sIm5hbWUiOiJUZXN0IFRlc3Rlc2VuIiwiaWF0IjoxNzI1MzYzNTc4LCJleHAiOjE3MjUzNjcxNzh9._c0EcoK6bqbOMO7V1sjOaZhN9BCAquUENnwfMBskq4E
-

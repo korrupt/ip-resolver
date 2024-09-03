@@ -1,6 +1,7 @@
 import { spawn } from 'node:child_process';
 import path from 'node:path';
 import dotenv from 'dotenv';
+import { CredentialManager } from '../api/credentials';
 
 /* eslint-disable */
 var __TEARDOWN_MESSAGE__: string;
@@ -9,6 +10,8 @@ module.exports = async function () {
   const env = dotenv.config({ path: path.join(process.cwd(), '.env.test'), override: true });
 
   console.log('\nSetting up...\n');
+
+  globalThis.__manager__ = new CredentialManager();
 
   const backend = spawn('docker', ['compose', '-f', 'docker-compose-test.yml', '--env-file=.env.test', 'up'], {
     shell: true,
