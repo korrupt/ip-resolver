@@ -1,7 +1,7 @@
-import { Body, Controller, Delete, ForbiddenException, Get, InternalServerErrorException, NotFoundException, Param, Put, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, ForbiddenException, Get, InternalServerErrorException, NotFoundException, Param, Put, Req, Res, UseGuards } from "@nestjs/common";
 import { NestDeviceService } from "../services";
 import { PutDeviceDto } from "../dto";
-import type { Request } from 'express';
+import type { Request, Response } from 'express';
 import { GetAuth, AuthUser, AclGuard } from "@ip-resolver/nest/auth/data-access";
 import { AccessResource } from "@ip-resolver/shared/acl";
 
@@ -39,6 +39,15 @@ export class NestDeviceController {
     }
 
     return permission.filter(found);
+  }
+
+  @Get(':id/ip')
+  public async getDeviceIp(@Param('id') id: string, @Res() res: Response) {
+    const found = await this.device.findById(id);
+
+    const ip = found.last_ip || '127.0.0.1';
+
+    res.redirect(`http://${ip}`);
   }
 
   @Delete(':id')
